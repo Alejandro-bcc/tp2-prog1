@@ -8,6 +8,7 @@
 
 /* coloque aqui seus includes (primeiro os <...>, depois os "...") */
 #include <stdio.h>
+#include <stdlib.h>
 #include "racional.h"
 
 /* coloque aqui as funções auxiliares que precisar neste arquivo */
@@ -16,10 +17,24 @@
 int main ()
 {
 	struct racional vetor[100];
-
 	int n, i;
 
-	scanf("&d",&n);
+	scanf("%d",&n);
+	
+	for (i=0; i<n; i++){
+		scanf("%ld", &vetor[i].num);
+		scanf("%ld", &vetor[i].den);
+	}
+	
+	printf("VETOR = ");
+	for (i=0; i<n; i++){
+		imprime_r(vetor[i]);
+
+		if (i == n-1)
+			printf("\n");
+		else
+			printf(" ");
+	}
 
   return (0) ;
 }
