@@ -14,9 +14,10 @@
 /* coloque aqui as funções auxiliares que precisar neste arquivo */
 
 /* programa principal */
-int main ()
-{
+int main (){
+
 	struct racional vetor[100];
+	struct racional *ptr = vetor;
 	int n, i;
 
 	scanf("%d",&n);
@@ -27,14 +28,9 @@ int main ()
 	}
 	
 	printf("VETOR = ");
-	for (i=0; i<n; i++){
-		imprime_r(vetor[i]);
+	imprime_vetor(ptr, n);
 
-		if (i == n-1)
-			printf("\n");
-		else
-			printf(" ");
-	}
+	/*elimina_invalidos(ptr, n);*/
 
-  return (0) ;
+	return (0) ;
 }

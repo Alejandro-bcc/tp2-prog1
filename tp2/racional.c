@@ -118,7 +118,7 @@ struct racional sorteia_r (long min, long max){
      - se o racional for negativo, o sinal "-" vem antes do numerador;
      - se numerador e denominador forem negativos, o racional é positivo. */
 void imprime_r (struct racional r){
-
+*
     if (valido_r(r)){
 
 		r = simplifica_r(r);
@@ -137,6 +137,22 @@ void imprime_r (struct racional r){
     }
 }
 
+/* Imprime um vetor de racionais  */
+void imprime_vetor(struct racional *ptr, int n){
+
+	int i;
+
+	for (i=0; i<n; i++){
+        imprime_r(*ptr);
+		ptr += 1;
+
+        if (i == n-1)
+            printf("\n");
+        else
+            printf(" ");
+    }
+
+}
 /* Compara dois racionais r1 e r2. Retorno: -2 se r1 ou r2 for inválido,
  * -1 se r1 < r2, 0 se r1 = r2 ou 1 se r1 > r2 */
 int compara_r (struct racional r1, struct racional r2){
@@ -153,21 +169,39 @@ int compara_r (struct racional r1, struct racional r2){
 	}
 }
 
+/* Elimina todos os elementos invalidos de um vetor de racionais  */
+/* Ou seja, aqueles cujo denominador eh zero  */
+void elimina_invalidos(struct racional *ptr, int n){
+
+	struct racional *ptr_aux;
+	int i;
+
+	for (i=0; i<n; i++){
+		if (!valido_r(*ptr)){
+			/* elimina-o do vetor */
+			/* desloca todos os que estao na frente para atras  */
+		} else
+			ptr++;
+	}
+}
+
 /* Retorna a soma dos racionais r1 e r2 no parametro *r3.
  * Retorna 1 se a operacao foi bem sucedida ou
  *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int soma_r (struct racional r1, struct racional r2, struct racional *r3){
 	
-	long MMC;
+	if (valido_r(r1) && valido_r(r2)){
 	
-	MMC = mmc(r1.den, r2.den);
-	(*r3).den = MMC;
-	(*r3).num = (MMC / r1.den) * r1.num + (MMC / r2.den) * r2.num;
+		long MMC;
+	
+		MMC = mmc(r1.den, r2.den);
+		(*r3).den = MMC;
+		(*r3).num = (MMC / r1.den) * r1.num + (MMC / r2.den) * r2.num;
 
-	if (valido_r(*r3) && (*r3).num != 0)
-		return 1;
-	else 
-		return 0;
+		if ((*r3).num != 0)
+			return 1;
+	}
+	return 0;
 }
 
 /* Retorna a subtracao dos racionais r1 e r2 no parametro *r3.
