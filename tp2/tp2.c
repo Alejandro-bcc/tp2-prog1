@@ -11,13 +11,64 @@
 #include <stdlib.h>
 #include "racional.h"
 
-/* coloque aqui as funções auxiliares que precisar neste arquivo */
+/* Imprime um vetor de racionais  */
+void imprime_vetor_r(struct racional vetor[], int n){
+
+    int i;
+
+    for (i=0; i<n; i++){
+        imprime_r(vetor[i]);
+        printf(" ");
+    }
+    printf("\n");
+
+}
+
+/* Elimina todos os elementos invalidos de um vetor de racionais  */
+/* Ou seja, aqueles cujo denominador eh zero  */
+void elimina_invalidos(struct racional vetor[], int *n){
+
+    int i;
+
+    i = 0;
+    while (i < *n){
+        if (!valido_r(vetor[i])){
+			vetor[i] = vetor[*n-1];
+            *n-=1;
+
+        } else {
+            i++;
+        }
+    }
+}
+
+/* ordena o um vetor de racionais de maneira crescente  */
+void ordena_vetor_r(struct racional vetor[], int n){
+
+	int j;
+	struct racional aux;
+	
+	j = n-1;
+	while (j > 0 && compara_r(vetor[j], vetor[j-1])){
+
+		aux.num = vetor[j].num;
+		aux.den = vetor[j].den;
+
+		vetor[j].num = vetor[j-1].num;
+		vetor[j].den = vetor[j-1].den;
+
+		vetor[j-1].num = aux.num;
+		vetor[j-1].den = aux.den;
+
+		j -=1;
+
+	}
+}
 
 /* programa principal */
 int main (){
 
 	struct racional vetor[100];
-	struct racional *ptr = vetor;
 	int n, i;
 
 	scanf("%d",&n);
@@ -28,9 +79,15 @@ int main (){
 	}
 	
 	printf("VETOR = ");
-	imprime_vetor(ptr, n);
+	imprime_vetor_r(vetor, n);
 
-	/*elimina_invalidos(ptr, n);*/
+	elimina_invalidos(vetor, &n);
+	printf("VETOR = ");
+	imprime_vetor_r(vetor, n);
+
+	ordena_vetor_r(vetor, n);
+	printf("VETOR = ");
+	imprime_vetor_r(vetor, n);
 
 	return (0) ;
 }
