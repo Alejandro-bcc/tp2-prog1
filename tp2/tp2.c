@@ -45,24 +45,7 @@ void elimina_invalidos(struct racional vetor[], int *n){
 /* ordena o um vetor de racionais de maneira crescente  */
 void ordena_vetor_r(struct racional vetor[], int n){
 
-	int j;
-	struct racional aux;
 	
-	j = n-1;
-	while (j > 0 && compara_r(vetor[j], vetor[j-1])){
-
-		aux.num = vetor[j].num;
-		aux.den = vetor[j].den;
-
-		vetor[j].num = vetor[j-1].num;
-		vetor[j].den = vetor[j-1].den;
-
-		vetor[j-1].num = aux.num;
-		vetor[j-1].den = aux.den;
-
-		j -=1;
-
-	}
 }
 
 /* programa principal */
