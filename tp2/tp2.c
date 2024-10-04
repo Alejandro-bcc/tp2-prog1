@@ -52,34 +52,37 @@ void intercala(struct racional v[], struct racional v_aux[], int a, int m, int n
 
 		i = a;
 		j = m + 1;
-		for(k=0; k < n-1; k++){
-			if(j > n || (i <= m && compara_r(v[i], v[j]))){
-				v_aux[k] = v[i];
-				i++;
-			} else {
+		for(k=0; k <= n; k++){
+			if(j > n || (i <= m && compara_r(v[j], v[i]))){
 				v_aux[k] = v[j];
 				j++;
+			} else {
+				v_aux[k] = v[i];
+				i++;
 			}
 		}
 	}
 }
 
+/* sobrescreve o conteudo de v2 em v1  */
+void sobrescreve_vetor(struct racional v1[], struct racional v2[], int n){
+
+	int i;
+	for(i=0; i<n; i++){
+		v1[i] = v2[i];
+	}
+}
 /* ordena um vetor de racionais de maneira crescente  */
 /* utiliza o algoritmo de ordenacao Merge Sort  */
 void ordena_vetor(struct racional v[], struct racional v_aux[], int a, int n){
 
-	int m, k;
+	int m;
 
 	if(a < n){
 		m = (a + n)/2;
 		ordena_vetor(v, v_aux, a, m);
 		ordena_vetor(v, v_aux, m+1, n);
 		intercala(v, v_aux, a, m, n);
-
-		for(k=0; k<n-1; k++){
-			v[k] = v_aux[k];
-		}
-
 	}
 }
 
@@ -106,6 +109,7 @@ int main (){
 	imprime_vetor_r(vetor, n);
 
 	ordena_vetor(vetor, v_aux, 0, n-1);
+	sobrescreve_vetor(vetor, v_aux, n);
 	printf("VETOR = ");
 	imprime_vetor_r(vetor, n);
 
