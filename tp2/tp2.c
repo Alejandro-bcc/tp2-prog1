@@ -42,35 +42,53 @@ void elimina_invalidos(struct racional vetor[], int *n){
     }
 }
 
-/* troca dois racionais de posicao em um vetor */
-void troca_r(struct racional v[], int i, int j){
-  
-  struct racional aux;
-  aux = v[i];
-  v[i] = v[j];
-  v[j] = aux;
-  
+/* intercala dois subvetores ordenados  */
+/* auxilia na execucao do algoritmo de ordenacao que utiliza o Merge Sort  */
+void intercala(struct racional v[], struct racional v_aux[], int a, int m, int n){
+
+	int i, j, k;
+
+	if(a < n){
+
+		i = a;
+		j = m + 1;
+		for(k=0; k < n-1; k++){
+			if(j > n || (i <= m && compara_r(v[i], v[j]))){
+				v_aux[k] = v[i];
+				i++;
+			} else {
+				v_aux[k] = v[j];
+				j++;
+			}
+		}
+	}
 }
 
 /* ordena um vetor de racionais de maneira crescente  */
-void ordena_vetor_r(struct racional vetor[], int n){
+/* utiliza o algoritmo de ordenacao Merge Sort  */
+void ordena_vetor(struct racional v[], struct racional v_aux[], int a, int n){
 
-  int i, j;
-  i = 0;
-  while(i < n-1){
-    j = i + 1;
-    while(compara_r(vetor[j], vetor[i])){
-      troca_r(vetor, i, j);
-      j++;
-    }
-    i ++;
-  }
+	int m, k;
+
+	if(a < n){
+		m = (a + n)/2;
+		ordena_vetor(v, v_aux, a, m);
+		ordena_vetor(v, v_aux, m+1, n);
+		intercala(v, v_aux, a, m, n);
+
+		for(k=0; k<n-1; k++){
+			v[k] = v_aux[k];
+		}
+
+	}
 }
 
 /* programa principal */
 int main (){
 
 	struct racional vetor[100];
+	struct racional v_aux[100];
+
 	int n, i;
 
 	scanf("%d",&n);
@@ -87,7 +105,7 @@ int main (){
 	printf("VETOR = ");
 	imprime_vetor_r(vetor, n);
 
-	ordena_vetor_r(vetor, n);
+	ordena_vetor(vetor, v_aux, 0, n-1);
 	printf("VETOR = ");
 	imprime_vetor_r(vetor, n);
 
