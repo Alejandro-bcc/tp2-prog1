@@ -42,10 +42,29 @@ void elimina_invalidos(struct racional vetor[], int *n){
     }
 }
 
-/* ordena o um vetor de racionais de maneira crescente  */
+/* troca dois racionais de posicao em um vetor */
+void troca_r(struct racional v[], int i, int j){
+  
+  struct racional aux;
+  aux = v[i];
+  v[i] = v[j];
+  v[j] = aux;
+  
+}
+
+/* ordena um vetor de racionais de maneira crescente  */
 void ordena_vetor_r(struct racional vetor[], int n){
 
-	
+  int i, j;
+  i = 0;
+  while(i < n-1){
+    j = i + 1;
+    while(compara_r(vetor[j], vetor[i])){
+      troca_r(vetor, i, j);
+      j++;
+    }
+    i ++;
+  }
 }
 
 /* programa principal */
