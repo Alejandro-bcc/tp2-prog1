@@ -20,7 +20,7 @@ void imprime_vetor_r(struct racional vetor[], int n){
         imprime_r(vetor[i]);
         printf(" ");
     }
-    printf("\b\n");
+    printf("\n");
 
 }
 
@@ -42,41 +42,55 @@ void elimina_invalidos(struct racional vetor[], int *n){
     }
 }
 
-/* ordena todos os elementos de um vetor de racionais de maneira crescente */
-/* utiliza o algoritmo de bubble sort  */
-void ordena_vetor(struct racional v[], int n){
+/* intercala dois subvetores ordenados  */
+/* auxilia na execucao do algoritmo de ordenacao que utiliza o Merge Sort  */
+void intercala(struct racional v[], struct racional v_aux[], int a, int m, int n){
 
-	struct racional aux;
-	int i, j;
+	int i, j, k;
+	i = a;
+	j = m + 1;
+	printf("i: %d\nj: %d\n", i, j);
 
-	for(i = n-1; i > 0; i--){
-		for(j = 0; j < i; j++){
-			if(compara_r(v[j+1], v[j])){
-				aux = v[j+1];
-				v[j+1] = v[j];
-				v[j] = aux;
-			}
+	for(k=0; k<=n; k++){
+		if (j > n || (i <= m && compara_r(v[i], v[j]))){
+			v_aux[k] = v[i];
+			i++;
+		} else {
+			v_aux[k] = v[j];
+			j++;
 		}
 	}
+	
 }
 
-/* soma os elementos de um vetor de racionais */
-void soma_vetor(struct racional vetor[], int n, struct racional *soma){
+/* sobrescreve o conteudo de v2 em v1  */
+void sobrescreve_vetor(struct racional v1[], struct racional v2[], int n){
 
 	int i;
-	(*soma).num = 0;
-	(*soma).den = 1;
-	for(i = 0; i < n; i++){
-		soma_r(*soma, vetor[i], soma);
+	for(i=0; i<n; i++){
+		v1[i] = v2[i];
 	}
+}
+/* ordena um vetor de racionais de maneira crescente  */
+/* utiliza o algoritmo de ordenacao Merge Sort  */
+void ordena_vetor(struct racional v[], struct racional v_aux[], int a, int n){
 
+	int m;
+
+	if(a < n){
+		m = (a + n)/2;
+		ordena_vetor(v, v_aux, a, m);
+		ordena_vetor(v, v_aux, m+1, n);
+		intercala(v, v_aux, a, m, n);
+	}
 }
 
 /* programa principal */
 int main (){
 
 	struct racional vetor[100];
-	struct racional soma;
+	struct racional v_aux[100];
+
 	int n, i;
 
 	scanf("%d",&n);
@@ -92,15 +106,10 @@ int main (){
 	elimina_invalidos(vetor, &n);
 	printf("VETOR = ");
 	imprime_vetor_r(vetor, n);
-								
-	ordena_vetor(vetor, n);
-	printf("VETOR = ");
-	imprime_vetor_r(vetor, n);
 
-	soma_vetor(vetor, n, &soma);
-	printf("SOMA: ");
-	imprime_r(soma);
-	printf("\n");
+	ordena_vetor(vetor, v_aux, 0, n-1);
+	printf("VETOR = ");
+	imprime_vetor_r(v_aux, n);
 
 	return (0) ;
 }

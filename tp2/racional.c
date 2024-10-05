@@ -143,8 +143,11 @@ int compara_r (struct racional r1, struct racional r2){
 
 	if (valido_r(r1) && valido_r(r2)){
 
+		r1 = simplifica_r(r1); /* os racionais sao simplicados para */
+		r2 = simplifica_r(r2); /* evitar erros na comparacao */
+
 		if (r1.num * r2.den < r2.num * r1.den)
-			return -1;
+			return 1;
 		else 
 			return 0;
 
@@ -157,8 +160,8 @@ int compara_r (struct racional r1, struct racional r2){
  * Retorna 1 se a operacao foi bem sucedida ou
  *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int soma_r (struct racional r1, struct racional r2, struct racional *r3){
-	
-	if (!valido_r(r1) || !valido_r(r2) || r3 == NULL){
+
+		if (!valido_r(r1) || !valido_r(r2) || r3 == NULL){
 		return 0;
 
 	} else {
@@ -170,20 +173,58 @@ int soma_r (struct racional r1, struct racional r2, struct racional *r3){
 
 		return 1;
 	}
+
 }
 
 /* Retorna a subtracao dos racionais r1 e r2 no parametro *r3.
  * Retorna 1 se a operacao foi bem sucedida ou
  *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
-int subtrai_r (struct racional r1, struct racional r2, struct racional *r3);
+int subtrai_r (struct racional r1, struct racional r2, struct racional *r3){
+
+	if (!valido_r(r1) || !valido_r(r2) || r3 == NULL){
+		return 0;
+
+	} else {
+		long MMC;
+	
+		MMC = mmc(r1.den, r2.den);
+		(*r3).den = MMC;
+		(*r3).num = (MMC / r1.den) * r1.num - (MMC / r2.den) * r2.num;
+
+		return 1;
+	}
+}
 
 /* Retorna a multiplicacao dos racionais r1 e r2 no parametro *r3.
  * Retorna 1 se a operacao foi bem sucedida ou
  *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
-int multiplica_r (struct racional r1, struct racional r2, struct racional *r3);
+int multiplica_r (struct racional r1, struct racional r2, struct racional *r3){
+
+	if(!valido_r(r1) || !valido_r(r2) || r3 == NULL){
+		return 0;
+
+	} else {
+
+		(*r3).num = r1.num * r2.num;
+		(*r3).den = r1.den * r2.den;
+		return 1;
+	}
+
+}
 
 /* Retorna a divisao dos racionais r1 e r2 no parametro *r3.
  * Retorna 1 se a operacao foi bem sucedida ou
  *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
-int divide_r (struct racional r1, struct racional r2, struct racional *r3);
+int divide_r (struct racional r1, struct racional r2, struct racional *r3){
+
+	if(!valido_r(r1) || !valido_r(r2) || r3 == NULL || r2.num == 0){
+		return 0;
+
+	} else {
+
+		(*r3).num = r1.num * r2.den;
+		(*r3).den = r1.den * r2.num;
+		return 1;
+	}
+}
 
