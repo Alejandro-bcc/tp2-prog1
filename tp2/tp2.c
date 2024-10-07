@@ -97,7 +97,7 @@ int main (){
 	imprime_vetor_r(vetor, n);
 
 	soma_vetor(vetor, n, &soma);
-	printf("SOMA: ");
+	printf("SOMA = ");
 	imprime_r(soma);
 	printf("\n");
 
