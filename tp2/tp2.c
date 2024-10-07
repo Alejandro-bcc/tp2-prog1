@@ -6,7 +6,6 @@
  * GRR 20242778.
 */
 
-/* coloque aqui seus includes (primeiro os <...>, depois os "...") */
 #include <stdio.h>
 #include <stdlib.h>
 #include "racional.h"
@@ -42,8 +41,8 @@ void elimina_invalidos(struct racional vetor[], int *n){
     }
 }
 
-/* ordena todos os elementos de um vetor de racionais de maneira crescente */
-/* utiliza o algoritmo de bubble sort  */
+/* Ordena todos os elementos de um vetor de racionais de maneira crescente */
+/* Utiliza o algoritmo de bubble sort  */
 void ordena_vetor(struct racional v[], int n){
 
 	struct racional aux;
@@ -60,7 +59,7 @@ void ordena_vetor(struct racional v[], int n){
 	}
 }
 
-/* soma os elementos de um vetor de racionais */
+/* Soma os elementos de um vetor de racionais */
 void soma_vetor(struct racional vetor[], int n, struct racional *soma){
 
 	int i;

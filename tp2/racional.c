@@ -8,16 +8,10 @@
  * funções auxiliares para facilitar a implementação daquelas funções.
 */
 
-/* coloque aqui seus includes (primeiro os <...>, depois os "...") */
 #include <stdio.h>
 #include <stdlib.h>
 #include "racional.h"
 
-/*
- * Implemente aqui as funcoes definidas no racionais.h; caso precise,
- * pode definir aqui funcoes auxiliares adicionais, que devem ser usadas
- * somente neste arquivo.
-*/
 /* Cria um número racional com o numerador e denominador indicados. */
 struct racional cria_r (long numerador, long denominador){
 
@@ -43,8 +37,8 @@ long aleat (long min, long max){
     return rand() % (max - min + 1) + min;
 }
 
-/* Máximo Divisor Comum entre a e b      */
-/* calcula o MDC pelo método de Euclides */
+/* Calcula Máximo Divisor Comum entre a e b */
+/* Utiliza o metodo de Euclides */
 long mdc (long a, long b){
 
 	long resto;
@@ -57,18 +51,13 @@ long mdc (long a, long b){
     return labs(a); /* retorna o valor absoluto de a */
 }                 
 
-/* Mínimo Múltiplo Comum entre a e b */
-/* mmc = (a * b) / mdc (a, b)        */
+/* Calcula o Mínimo Múltiplo Comum entre a e b */
 long mmc (long a, long b){
 	
 	return (a * b) / mdc(a, b);
 }
 
-/* Recebe um número racional e o simplifica.
- * Por exemplo, ao receber 10/8 deve retornar 5/4.
- * Se ambos numerador e denominador forem negativos, deve retornar um positivo.
- * Se o denominador for negativo, o sinal deve migrar para o numerador.
- * Se r for inválido, devolve-o sem simplificar. */
+/* Recebe um número racional e o simplifica. */
 struct racional simplifica_r (struct racional r){
 
 	if (valido_r(r)){
@@ -89,10 +78,8 @@ struct racional simplifica_r (struct racional r){
     return r;
 }
 
-/* Retorna um número racional aleatório na forma simplificada.
- * Deve ser sorteado o numerador e depois o denominador.
- * o racional gerado pode ser válido ou inválido.
- * O numerador e o denominador devem ser inteiros entre min e max. */
+/* Retorna um número racional aleatório */
+/* O numerador e denominador estao entre min e max  */
 struct racional sorteia_r (long min, long max){
 
     long numerador, denominador;
@@ -107,16 +94,7 @@ struct racional sorteia_r (long min, long max){
     return sorteado;
 }
 
-/* Imprime um racional r, respeitando estas regras:
-   - o racional deve ser impresso na forma simplificada;
-   - não imprima espaços em branco e não mude de linha;
-   - a saída deve ter o formato "num/den", a menos dos casos abaixo:
-     - se o racional for inválido, imprime a mensagem "NaN" (Not a Number);
-     - se o numerador for 0, imprime somente "0";
-     - se o denominador for 1, imprime somente o numerador;
-     - se o numerador e denominador forem iguais, imprime somente "1";
-     - se o racional for negativo, o sinal "-" vem antes do numerador;
-     - se numerador e denominador forem negativos, o racional é positivo. */
+/* Imprime um racional r na forma simplificada */
 void imprime_r (struct racional r){
 
     if (valido_r(r)){
@@ -161,7 +139,7 @@ int compara_r (struct racional r1, struct racional r2){
  *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int soma_r (struct racional r1, struct racional r2, struct racional *r3){
 
-		if (!valido_r(r1) || !valido_r(r2) || r3 == NULL){
+	if (!valido_r(r1) || !valido_r(r2) || r3 == NULL){
 		return 0;
 
 	} else {
