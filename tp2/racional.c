@@ -3,8 +3,8 @@
  * Arquivo de implementação para TAD racional.
  * Feito em 20/09/2024 para a disciplina CI1001 - Programação 1.
  *
- * Este arquivo deve conter as implementações das funções cujos protótipos
- * foram definidos em racional.h. Neste arquivo também podem ser definidas
+ * Este arquivo contem as implementações das funções cujos protótipos
+ * foram definidos em racional.h. Neste arquivo também foram definidas
  * funções auxiliares para facilitar a implementação daquelas funções.
 */
 
@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include "racional.h"
 
-/* Cria um número racional com o numerador e denominador indicados. */
 struct racional cria_r (long numerador, long denominador){
 
     struct racional r;
@@ -21,8 +20,6 @@ struct racional cria_r (long numerador, long denominador){
     return r;
 }
 
-/* Retorna 1 se o racional r for válido ou 0 se for inválido.
- * Um racional é inválido se seu denominador for zero */
 int valido_r (struct racional r){
 
 	if (r.den == 0)
@@ -31,7 +28,7 @@ int valido_r (struct racional r){
         return 1;
 }
 
-/* retorna um número aleatório entre min e max, inclusive. */
+/* Retorna um numero aleatorio gerado entre min e max, inclusive  */
 long aleat (long min, long max){
 
     return rand() % (max - min + 1) + min;
@@ -49,7 +46,7 @@ long mdc (long a, long b){
         b = resto;
        }
     return labs(a); /* retorna o valor absoluto de a */
-}                 
+}                   /* para evitar modificar o sinal dos racionais  */
 
 /* Calcula o Mínimo Múltiplo Comum entre a e b */
 long mmc (long a, long b){
@@ -57,11 +54,12 @@ long mmc (long a, long b){
 	return (a * b) / mdc(a, b);
 }
 
-/* Recebe um número racional e o simplifica. */
+/* Recebe um racional e o retorna na forma simplificada */
 struct racional simplifica_r (struct racional r){
 
+	long MDC;
+
 	if (valido_r(r)){
-	    long MDC;
 
         MDC = mdc(r.num, r.den);
 
@@ -78,8 +76,6 @@ struct racional simplifica_r (struct racional r){
     return r;
 }
 
-/* Retorna um número racional aleatório */
-/* O numerador e denominador estao entre min e max  */
 struct racional sorteia_r (long min, long max){
 
     long numerador, denominador;
@@ -89,12 +85,9 @@ struct racional sorteia_r (long min, long max){
 	denominador = aleat(min, max);
 
     sorteado = cria_r(numerador, denominador);
-    sorteado = simplifica_r(sorteado);
-
-    return sorteado;
+    return simplifica_r(sorteado);
 }
 
-/* Imprime um racional r na forma simplificada */
 void imprime_r (struct racional r){
 
     if (valido_r(r)){
@@ -103,20 +96,22 @@ void imprime_r (struct racional r){
 
 		if (r.num == 0){
 			printf("0");
+
 		} else if (r.den == 1){
 			printf("%ld", r.num);
+
 		} else if (r.num == r.den){
 			printf("1");
+
 		} else {
-			printf("%ld/%ld", r.num, r.den);
+		printf("%ld/%ld", r.num, r.den);
 		}
+
     } else {
         printf("NaN");
     }
 }
 
-/* Compara dois racionais r1 e r2. Retorno: -2 se r1 ou r2 for inválido,
- * -1 se r1 < r2, 0 se r1 = r2 ou 1 se r1 > r2 */
 int compara_r (struct racional r1, struct racional r2){
 
 	if (valido_r(r1) && valido_r(r2)){
@@ -134,9 +129,6 @@ int compara_r (struct racional r1, struct racional r2){
 	}
 }
 
-/* Retorna a soma dos racionais r1 e r2 no parametro *r3.
- * Retorna 1 se a operacao foi bem sucedida ou
- *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int soma_r (struct racional r1, struct racional r2, struct racional *r3){
 
 	if (!valido_r(r1) || !valido_r(r2) || r3 == NULL){
@@ -154,9 +146,6 @@ int soma_r (struct racional r1, struct racional r2, struct racional *r3){
 
 }
 
-/* Retorna a subtracao dos racionais r1 e r2 no parametro *r3.
- * Retorna 1 se a operacao foi bem sucedida ou
- *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int subtrai_r (struct racional r1, struct racional r2, struct racional *r3){
 
 	if (!valido_r(r1) || !valido_r(r2) || r3 == NULL){
@@ -173,9 +162,6 @@ int subtrai_r (struct racional r1, struct racional r2, struct racional *r3){
 	}
 }
 
-/* Retorna a multiplicacao dos racionais r1 e r2 no parametro *r3.
- * Retorna 1 se a operacao foi bem sucedida ou
- *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int multiplica_r (struct racional r1, struct racional r2, struct racional *r3){
 
 	if(!valido_r(r1) || !valido_r(r2) || r3 == NULL){
@@ -190,11 +176,9 @@ int multiplica_r (struct racional r1, struct racional r2, struct racional *r3){
 
 }
 
-/* Retorna a divisao dos racionais r1 e r2 no parametro *r3.
- * Retorna 1 se a operacao foi bem sucedida ou
- *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int divide_r (struct racional r1, struct racional r2, struct racional *r3){
 
+	/* o ultimo teste evita divisoes por zero */
 	if(!valido_r(r1) || !valido_r(r2) || r3 == NULL || r2.num == 0){
 		return 0;
 

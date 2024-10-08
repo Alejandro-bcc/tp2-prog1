@@ -23,8 +23,10 @@ void imprime_vetor_r(struct racional vetor[], int n){
 
 }
 
-/* Elimina todos os elementos invalidos de um vetor de racionais  */
-/* Ou seja, aqueles cujo denominador eh zero  */
+/* Elimina todos os elementos invalidos de um vetor de racionais */
+/* Ou seja, aqueles cujo denominador eh zero */
+/* Ao achar um invalido, sobrescreve o ultimo elemento do vetor */
+/* na posicao do invalido e diminui o tamanho do vetor */
 void elimina_invalidos(struct racional vetor[], int *n){
 
     int i;
@@ -80,6 +82,7 @@ int main (){
 
 	scanf("%d",&n);
 	
+	/* le o vetor */
 	for (i=0; i<n; i++){
 		scanf("%ld", &vetor[i].num);
 		scanf("%ld", &vetor[i].den);
