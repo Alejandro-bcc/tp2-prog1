@@ -10,6 +10,19 @@
 #include <stdlib.h>
 #include "racional.h"
 
+/* prenche um vetor de racionais */
+void le_vetor_r(struct racional v[], int n){
+
+	long num, den;
+	int i;
+
+	for (i=0; i<n; i++){
+		scanf("%ld", &num);
+		scanf("%ld", &den);
+		v[i] = cria_r(num, den);
+	}
+}
+
 /* Imprime um vetor de racionais  */
 void imprime_vetor_r(struct racional vetor[], int n){
 
@@ -78,15 +91,11 @@ int main (){
 
 	struct racional vetor[100];
 	struct racional soma;
-	int n, i;
+	int n;
 
 	scanf("%d",&n);
 	
-	/* le o vetor */
-	for (i=0; i<n; i++){
-		scanf("%ld", &vetor[i].num);
-		scanf("%ld", &vetor[i].den);
-	}
+	le_vetor_r(vetor, n);
 	
 	printf("VETOR = ");
 	imprime_vetor_r(vetor, n);
